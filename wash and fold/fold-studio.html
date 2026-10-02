@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fold Studio — Laundry, Care, Convenience</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,400..600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f6f2ea;
+    --cream-2:#efe8db;
+    --olive:#454a37;
+    --olive-deep:#33372a;
+    --rose:#d9a6a0;
+    --rose-soft:#f1ddd7;
+    --ink:#2b2b22;
+    --line: rgba(43,43,34,0.14);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Jost',sans-serif;
+    font-weight:400;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.script{
+    font-family:'Fraunces',serif;
+  }
+  .script{
+    font-style:italic;
+    font-weight:400;
+  }
+  a{color:inherit;text-decoration:none;}
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(246,242,234,0.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 32px;
+    max-width:1080px;margin:0 auto;
+  }
+  .logo{
+    font-size:1.4rem;
+    letter-spacing:0.04em;
+    display:flex;align-items:baseline;gap:6px;
+  }
+  .logo span{font-style:italic;color:var(--rose);font-size:1.1rem;}
+  .navlinks{display:flex;gap:34px;font-size:0.92rem;letter-spacing:0.02em;}
+  .navlinks a{position:relative;padding-bottom:4px;}
+  .navlinks a::after{
+    content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--olive);
+    transition:width 0.3s ease;
+  }
+  .navlinks a:hover::after{width:100%;}
+  .navcta{
+    background:var(--olive);color:var(--cream);
+    padding:10px 20px;border-radius:30px;font-size:0.88rem;
+    letter-spacing:0.02em;
+  }
+  .navcta:hover{background:var(--olive-deep);}
+  .burger{display:none;font-size:1.6rem;background:none;border:none;cursor:pointer;color:var(--ink);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:96px 32px 70px;
+    max-width:1080px;margin:0 auto;
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:40px;
+    align-items:center;
+  }
+  .hero-copy .eyebrow{
+    text-transform:uppercase;
+    font-size:0.78rem;
+    letter-spacing:0.22em;
+    color:var(--olive);
+    display:flex;align-items:center;gap:10px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{content:'';width:26px;height:1px;background:var(--olive);display:inline-block;}
+  .hero h1{
+    font-size:4.6rem;
+    font-weight:400;
+    line-height:0.95;
+    letter-spacing:-0.01em;
+  }
+  .hero h1 .accent{
+    display:block;
+    font-style:italic;
+    color:var(--rose);
+    font-weight:400;
+    font-size:1.05em;
+    margin-top:2px;
+  }
+  .hero p.tagline{
+    margin-top:26px;
+    font-size:1.15rem;
+    line-height:1.6;
+    max-width:420px;
+    color:#4a4a3d;
+  }
+  .hero .cta-row{
+    margin-top:36px;
+    display:flex;gap:16px;flex-wrap:wrap;
+  }
+  .btn-primary{
+    background:var(--olive);color:var(--cream);
+    padding:15px 30px;border-radius:32px;
+    font-size:0.95rem;letter-spacing:0.02em;
+    display:inline-flex;align-items:center;gap:10px;
+    transition:transform 0.25s ease, background 0.25s ease;
+  }
+  .btn-primary:hover{background:var(--olive-deep);transform:translateY(-2px);}
+  .btn-ghost{
+    border:1px solid var(--olive);
+    padding:15px 26px;border-radius:32px;
+    font-size:0.95rem;
+    transition:background 0.25s ease;
+  }
+  .btn-ghost:hover{background:rgba(69,74,55,0.08);}
+
+  /* fold stack illustration */
+  .fold-stack{
+    position:relative;height:420px;
+  }
+  .cloth{
+    position:absolute;left:8%;right:8%;
+    border-radius:14px;
+    box-shadow:0 18px 30px -14px rgba(43,43,34,0.25);
+    transform-origin:center;
+    transition:transform 0.6s cubic-bezier(.22,.61,.36,1);
+  }
+  .cloth1{background:#c9cdb8;height:78px;top:230px;}
+  .cloth2{background:var(--rose-soft);height:70px;top:170px;left:6%;right:10%;}
+  .cloth3{background:#8f9878;height:74px;top:104px;left:10%;right:6%;}
+  .cloth4{background:#e8ded0;height:64px;top:48px;}
+  .fold-stack:hover .cloth1{transform:translateY(4px) rotate(-1deg);}
+  .fold-stack:hover .cloth2{transform:translateY(-2px) rotate(1deg);}
+  .fold-stack:hover .cloth3{transform:translateY(2px) rotate(-0.6deg);}
+  .fold-stack:hover .cloth4{transform:translateY(-3px) rotate(0.8deg);}
+  .badge-doorstep{
+    position:absolute;top:-6px;right:-6px;
+    width:132px;height:132px;border-radius:50%;
+    background:var(--olive-deep);color:var(--cream);
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    font-size:0.75rem;line-height:1.35;letter-spacing:0.03em;
+    padding:14px;
+  }
+  .badge-doorstep .em{font-style:italic;color:var(--rose);display:block;font-family:'Fraunces',serif;font-size:0.95rem;}
+
+  /* ---------- SECTION LABELS ---------- */
+  .section{padding:90px 32px;max-width:1080px;margin:0 auto;}
+  .section-head{
+    display:flex;align-items:baseline;justify-content:space-between;
+    margin-bottom:52px;flex-wrap:wrap;gap:12px;
+  }
+  .section-head h2{
+    font-size:2.4rem;font-weight:400;
+  }
+  .section-head .num{
+    font-size:0.8rem;letter-spacing:0.15em;color:var(--rose);
+    text-transform:uppercase;
+  }
+  .rule{height:1px;background:var(--line);width:100%;margin:0 0 60px;}
+
+  /* ---------- SERVICES ---------- */
+  .services{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:20px;
+  }
+  .service-card{
+    background:var(--cream-2);
+    border-radius:18px;
+    padding:34px 22px;
+    text-align:center;
+    transition:transform 0.3s ease, background 0.3s ease;
+    cursor:default;
+  }
+  .service-card:hover{transform:translateY(-8px);background:#e6ddc8;}
+  .service-icon{
+    width:54px;height:54px;margin:0 auto 18px;
+    border-radius:50%;
+    background:var(--olive);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .service-icon svg{width:26px;height:26px;stroke:var(--cream);fill:none;stroke-width:1.6;}
+  .service-card h3{font-size:1.05rem;font-weight:500;font-family:'Jost',sans-serif;letter-spacing:0.02em;margin-bottom:6px;}
+  .service-card p{font-size:0.85rem;color:#5b5b4c;line-height:1.5;}
+
+  /* ---------- PROCESS STRIP ---------- */
+  .process{
+    display:flex;justify-content:space-between;margin-top:70px;
+    position:relative;
+  }
+  .process::before{
+    content:'';position:absolute;top:11px;left:5%;right:5%;height:1px;background:var(--line);
+  }
+  .process-step{
+    text-align:center;flex:1;position:relative;padding-top:0;
+  }
+  .process-dot{
+    width:22px;height:22px;border-radius:50%;background:var(--rose);
+    margin:0 auto 18px;border:4px solid var(--cream);position:relative;z-index:2;
+  }
+  .process-step p{font-size:0.88rem;font-weight:500;}
+
+  /* ---------- PRICING ---------- */
+  .pricing-wrap{
+    display:grid;grid-template-columns:1.3fr 1fr;gap:40px;
+  }
+  table.price-table{
+    width:100%;border-collapse:collapse;
+  }
+  table.price-table th{
+    text-align:left;font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--olive);padding-bottom:16px;border-bottom:1px solid var(--line);font-weight:500;
+  }
+  table.price-table td{
+    padding:20px 0;border-bottom:1px solid var(--line);font-size:1rem;
+  }
+  table.price-table td.item{font-family:'Fraunces',serif;font-size:1.15rem;}
+  table.price-table td.item small{display:block;font-family:'Jost',sans-serif;font-size:0.78rem;color:#6b6b5c;margin-top:2px;}
+  table.price-table td.price{text-align:right;font-weight:500;color:var(--olive-deep);}
+  .price-note{
+    margin-top:20px;font-size:0.85rem;color:#6b6b5c;font-style:italic;
+  }
+  .perks{
+    background:var(--olive);color:var(--cream);
+    border-radius:22px;padding:40px 32px;
+  }
+  .perks h3{font-family:'Fraunces',serif;font-style:italic;font-size:1.4rem;margin-bottom:24px;color:var(--rose);}
+  .perks ul{list-style:none;}
+  .perks li{
+    display:flex;gap:12px;align-items:flex-start;
+    font-size:0.92rem;line-height:1.5;margin-bottom:18px;
+    padding-bottom:18px;border-bottom:1px solid rgba(246,242,234,0.14);
+  }
+  .perks li:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .perks li svg{width:16px;height:16px;flex-shrink:0;margin-top:3px;stroke:var(--rose);fill:none;stroke-width:2;}
+
+  /* ---------- CTA / BOOK ---------- */
+  .book{
+    background:var(--olive-deep);color:var(--cream);
+    border-radius:28px;
+    padding:64px 48px;
+    display:grid;grid-template-columns:1.1fr 0.9fr;gap:40px;align-items:center;
+    position:relative;overflow:hidden;
+  }
+  .book::before{
+    content:'';position:absolute;right:-60px;top:-60px;width:220px;height:220px;
+    border-radius:50%;background:radial-gradient(circle, rgba(217,166,160,0.25), transparent 70%);
+  }
+  .book h2{font-size:2.1rem;font-weight:400;margin-bottom:16px;}
+  .book h2 .script{color:var(--rose);}
+  .book p{font-size:0.95rem;color:#d8d6c5;line-height:1.6;max-width:380px;}
+  .book-actions{display:flex;flex-direction:column;gap:14px;}
+  .contact-line{
+    display:flex;align-items:center;gap:14px;
+    background:rgba(246,242,234,0.08);
+    padding:16px 20px;border-radius:14px;
+    font-size:0.95rem;
+    transition:background 0.25s ease;
+  }
+  .contact-line:hover{background:rgba(246,242,234,0.16);}
+  .contact-line svg{width:20px;height:20px;stroke:var(--rose);fill:none;stroke-width:1.6;flex-shrink:0;}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--olive-deep);color:var(--cream);
+    margin-top:20px;
+  }
+  .foot-inner{
+    max-width:1080px;margin:0 auto;padding:36px 32px;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+    border-top:1px solid rgba(246,242,234,0.14);
+  }
+  .foot-band{
+    text-align:center;padding:14px;font-size:0.82rem;letter-spacing:0.08em;
+    background:#2a2e21;color:var(--rose-soft);
+  }
+
+  @media (max-width:860px){
+    .hero{grid-template-columns:1fr;padding-top:60px;}
+    .hero h1{font-size:3.1rem;}
+    .fold-stack{height:280px;order:-1;}
+    .navlinks{display:none;}
+    .burger{display:block;}
+    .services{grid-template-columns:repeat(2,1fr);}
+    .pricing-wrap{grid-template-columns:1fr;}
+    .book{grid-template-columns:1fr;padding:40px 26px;}
+    .process{flex-direction:column;gap:26px;}
+    .process::before{display:none;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">FOLD <span>Studio</span></div>
+    <div class="navlinks">
+      <a href="#services">Services</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#how">How it works</a>
+      <a href="#book">Contact</a>
+    </div>
+    <a class="navcta" href="https://wa.me/254111720604" target="_blank">Book a pickup</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow">Githurai 45 &amp; environs</div>
+    <h1>We pick up.<br>We clean.<br><span class="accent">You relax.</span></h1>
+    <p class="tagline">Doorstep laundry care for people with better things to do than stand over a wash basin. Fresh, clean, perfectly folded — delivered tomorrow.</p>
+    <div class="cta-row">
+      <a class="btn-primary" href="https://wa.me/254111720604" target="_blank">
+        Book your pickup
+      </a>
+      <a class="btn-ghost" href="#pricing">See pricing</a>
+    </div>
+  </div>
+  <div class="fold-stack">
+    <div class="badge-doorstep">Pickup &amp; drop-off<span class="em">at your doorstep</span></div>
+    <div class="cloth cloth4"></div>
+    <div class="cloth cloth3"></div>
+    <div class="cloth cloth2"></div>
+    <div class="cloth cloth1"></div>
+  </div>
+</section>
+
+<section class="section" id="services">
+  <div class="section-head">
+    <h2>Our services</h2>
+    <div class="num">Wash · Dry · Fold · Iron</div>
+  </div>
+  <div class="services">
+    <div class="service-card">
+      <div class="service-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><circle cx="12" cy="13" r="3"/><path d="M8 4h8v3H8z"/></svg></div>
+      <h3>Wash</h3>
+      <p>Eco-friendly detergents, gentle on fabric, tough on stains.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M4 12c2-3 5 3 8 0s6 3 8 0"/><path d="M4 17c2-3 5 3 8 0s6 3 8 0"/></svg></div>
+      <h3>Dry</h3>
+      <p>Fully dried and aired, never rushed, never damp.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="10" rx="2"/><path d="M4 8l8-4 8 4"/></svg></div>
+      <h3>Fold</h3>
+      <p>Perfectly folded, stacked, and ready to put away.</p>
+    </div>
+    <div class="service-icon-wrap"></div>
+    <div class="service-card">
+      <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M5 19h9a5 5 0 000-10H9"/><path d="M9 9V5"/></svg></div>
+      <h3>Iron</h3>
+      <p>Crisp, wrinkle-free finishing for clothes that need to look sharp.</p>
+    </div>
+  </div>
+
+  <div class="process" id="how">
+    <div class="process-step"><div class="process-dot"></div><p>You book a pickup</p></div>
+    <div class="process-step"><div class="process-dot"></div><p>We collect at your door</p></div>
+    <div class="process-step"><div class="process-dot"></div><p>Wash, fold &amp; iron with care</p></div>
+    <div class="process-step"><div class="process-dot"></div><p>Delivered back, tomorrow</p></div>
+  </div>
+</section>
+
+<div class="wrap"><div class="rule"></div></div>
+
+<section class="section" id="pricing">
+  <div class="section-head">
+    <h2>Pricing</h2>
+    <div class="num">Per kg, unless noted</div>
+  </div>
+  <div class="pricing-wrap">
+    <div>
+      <table class="price-table">
+        <tr><th>Service</th><th style="text-align:right;">Rate</th></tr>
+        <tr>
+          <td class="item">Wash &amp; Fold<small>Per kg</small></td>
+          <td class="price">KSh 80</td>
+        </tr>
+        <tr>
+          <td class="item">Wash, Fold &amp; Iron<small>Per kg</small></td>
+          <td class="price">KSh 100</td>
+        </tr>
+        <tr>
+          <td class="item">Duvets<small>Per piece</small></td>
+          <td class="price">KSh 1,000 – 1,200</td>
+        </tr>
+      </table>
+      <p class="price-note">Bulk and regular-client discounts available — ask us when you book.</p>
+    </div>
+    <div class="perks">
+      <h3>Why Fold Studio</h3>
+      <ul>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Pickup &amp; drop-off at your doorstep</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>We deliver at a discounted price</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Eco-friendly detergents</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>We care for your clothes like our own</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Reliable · fast · trusted</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="book">
+  <div class="book">
+    <div>
+      <h2>Let us handle your laundry.<br><span class="script">You handle life.</span></h2>
+      <p>Book your pickup today and have fresh, folded laundry back at your door tomorrow.</p>
+    </div>
+    <div class="book-actions">
+      <a class="contact-line" href="https://wa.me/254111720604" target="_blank">
+        <svg viewBox="0 0 24 24"><path d="M3 21l1.65-4.95A9 9 0 1112 21a9 9 0 01-9 0z"/></svg>
+        0111 720 604
+      </a>
+      <div class="contact-line">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-6.5 7-11a7 7 0 10-14 0c0 4.5 7 11 7 11z"/></svg>
+        Githurai 45 and its environs
+      </div>
+      <a class="btn-primary" href="https://wa.me/254111720604" target="_blank" style="justify-content:center;">Book your pickup today</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-inner">
+    <div class="logo" style="font-size:1.1rem;">FOLD <span>Studio</span></div>
+    <div style="font-size:0.85rem;color:#d8d6c5;">More than laundry, it's care.</div>
+  </div>
+  <div class="foot-band">CLEAN TODAY. DELIVERED TOMORROW.</div>
+</footer>
+
+</body>
+</html>
